@@ -6,3 +6,4 @@ Members:
 3. Douglas Richardson
 4. Justin Nguyen
 5. James Reilly
+6. Christian Rodriguez
