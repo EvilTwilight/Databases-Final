@@ -3,13 +3,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class Driver {
 
 	public static void main(String[] args) throws Exception {
+		Scanner scan = new Scanner(System.in);
 		createMoviesTable();
 		createCastTable();
 		createActsInTable();
+		firstGet(scan);
 		//dropTable();
 	}
 	
@@ -80,5 +83,24 @@ public class Driver {
 		}
 		return null;
 	}
-
+	
+	public static void firstGet(Scanner scan) throws Exception { // (5) query to find movie from an actor that has the higher score
+		try {
+			Connection con = getConnection();
+			String input = scan.nextLine();
+			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.title ORDER BY M.score DESC LIMIT 1");
+			
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()) {
+				System.out.println(result.getString("M.title"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Function complete.");
+		}
+	}
 }
