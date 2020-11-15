@@ -8,12 +8,18 @@ import java.util.Scanner;
 public class Driver {
 
 	public static void main(String[] args) throws Exception {
-		Scanner scan = new Scanner(System.in);
+		
 		createMoviesTable();
 		createCastTable();
 		createActsInTable();
-		firstGet(scan);
+		//firstGet(scan);
 		//dropTable();
+		
+		
+		//Douglas
+		swingContainer swingContainer = new swingContainer();  
+		swingContainer.showJFrameDemo();
+		
 	}
 	
 	public static void createMoviesTable() throws Exception{
@@ -75,7 +81,8 @@ public class Driver {
 	public static Connection getConnection() throws Exception{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234"); //replace db name, username, and password accordingly
+			//"jdbc:mysql://localhost:3306/test", "root", "1234"
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "fattycat123"); //replace db name, username, and password accordingly
 			return conn;
 		}
 		catch (Exception e) {
@@ -84,10 +91,13 @@ public class Driver {
 		return null;
 	}
 	
-	public static void firstGet(Scanner scan) throws Exception { // (5) query to find movie from an actor that has the higher score
+	//Query one, number 5 in proposal
+	public static void firstGet(String userInput) throws Exception { // (5) query to find movie from an actor that has the higher score
 		try {
+			//Scanner scan
 			Connection con = getConnection();
-			String input = scan.nextLine();
+			//scan.nextLine();
+			String input = userInput;
 			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.title ORDER BY M.score DESC LIMIT 1");
 			
 			ResultSet result = statement.executeQuery();
@@ -100,7 +110,7 @@ public class Driver {
 			e.printStackTrace();
 		}
 		finally {
-			System.out.println("Function complete.");
+			System.out.println("Query 1 complete.");
 		}
 	}
 }
