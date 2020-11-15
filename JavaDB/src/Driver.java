@@ -82,7 +82,7 @@ public class Driver {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			//"jdbc:mysql://localhost:3306/test", "root", "1234"
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "fattycat123"); //replace db name, username, and password accordingly
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234"); //replace db name, username, and password accordingly
 			return conn;
 		}
 		catch (Exception e) {
