@@ -131,5 +131,25 @@ public class Driver {
 		finally {
 			System.out.println("Query 2 complete.");
 		}
-	}	
+	}
+	
+	//Query three, number 7 in proposal
+	public static void thirdGet() throws Exception { 
+		try {
+			Connection con = getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT C.name, AVG(M.score) as avg_score FROM movies M, cast C, acts_in A WHERE C.aid = A.aid AND A.mid = M.mid GROUP BY C.name ORDER BY avg_score DESC LIMIT 10");
+			ResultSet result = statement.executeQuery();
+				
+			while(result.next()) {
+				System.out.println(result.getString("C.name"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Query 3 complete.");
+		}
+	}
+		
 }
