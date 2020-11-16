@@ -133,6 +133,14 @@ public class swingContainer {
 					e1.printStackTrace();
 				}
         	}
+		 
+		if(option2.isSelected()) {
+        		try {
+					Driver.secondGet(userInput.getText());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+        	}
             outputFrame.setVisible(true);
          }
       });
