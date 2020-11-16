@@ -113,4 +113,23 @@ public class Driver {
 			System.out.println("Query 1 complete.");
 		}
 	}
+	
+	//Query two, number 6 in proposal
+	public static void secondGet(String userInput) throws Exception { 
+		try {
+			Connection con = getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M WHERE title LIKE \"%" + userInput +"%\"");
+			ResultSet result = statement.executeQuery();
+				
+			while(result.next()) {
+				System.out.println(result.getString("M.title"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Query 2 complete.");
+		}
+	}	
 }
