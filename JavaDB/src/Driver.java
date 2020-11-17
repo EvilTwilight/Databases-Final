@@ -151,5 +151,24 @@ public class Driver {
 			System.out.println("Query 3 complete.");
 		}
 	}
+	
+	//Query five, number 9 in proposal (finds the movie with the largest cast size)
+	public static void fifthGet() throws Exception { 
+		try {
+			Connection con = getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT M.title, COUNT(A.aid) as count FROM movies M, acts_in A WHERE A.mid = M.mid GROUP BY M.title ORDER BY count DESC LIMIT 1");
+			ResultSet result = statement.executeQuery();
+				
+			while(result.next()) {
+				System.out.println(result.getString("M.title"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Query 5 complete.");
+		}
+	}
 		
 }
