@@ -9,6 +9,9 @@ import java.sql.Statement;
 public class Driver {
 	static String movie_name_score_path = "movie-name-score.txt";
 	static String movie_cast_path = "movie-cast.txt";
+        
+        
+        static swingContainer swingContainer;
 	public static void main(String[] args) throws Exception {
 		
 		createMoviesTable();
@@ -20,8 +23,7 @@ public class Driver {
 		import_actsin_table();
 		
 		//Douglas
-		swingContainer swingContainer = new swingContainer();  
-		swingContainer.showJFrameDemo();
+		swingContainer = new swingContainer();  
 		
 	}
 	
@@ -226,8 +228,11 @@ public class Driver {
 			
 			ResultSet result = statement.executeQuery();
 			
+                        swingContainer.createOutputFrame();
 			while(result.next()) {
-				System.out.println(input + "'s best movie is " + result.getString("M.title"));
+                            String output = input + "'s best movie is " + result.getString("M.title");
+                            swingContainer.addOutputToGui(output);
+                            System.out.println(output);
 			}
 		}
 		catch (Exception e) {
@@ -245,8 +250,11 @@ public class Driver {
 			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M WHERE title LIKE \"%" + userInput +"%\"");
 			ResultSet result = statement.executeQuery();
 				
+                        swingContainer.createOutputFrame();
 			while(result.next()) {
-				System.out.println(result.getString("M.title"));
+                            String output = result.getString("M.title");
+                            swingContainer.addOutputToGui(output);
+                            System.out.println(output);
 			}
 		}
 		catch (Exception e) {
@@ -264,8 +272,12 @@ public class Driver {
 			PreparedStatement statement = con.prepareStatement("SELECT C.name, AVG(M.score) as avg_score FROM movies M, cast C, acts_in A WHERE C.aid = A.aid AND A.mid = M.mid GROUP BY C.name ORDER BY avg_score DESC LIMIT 10");
 			ResultSet result = statement.executeQuery();
 				
+                        
+                        swingContainer.createOutputFrame();
 			while(result.next()) {
-				System.out.println(result.getString("C.name") + " has an average movie score of " + result.getString("avg_score"));
+                            String output = result.getString("C.name") + " has an average movie score of " + result.getString("avg_score");
+                            swingContainer.addOutputToGui(output);
+                            System.out.println(output);
 			}
 		}
 		catch (Exception e) {
@@ -283,9 +295,13 @@ public class Driver {
 			PreparedStatement statement = con.prepareStatement("SELECT C.name, D.name, COUNT(M.mid) as count FROM cast C, cast D, acts_in A, acts_in B, movies M WHERE C.aid!=D.aid AND C.aid=A.aid AND D.aid=B.aid AND A.mid=B.mid AND A.mid=M.mid GROUP BY C.name, D.name ORDER BY count DESC LIMIT 1");
 			ResultSet result = statement.executeQuery();
 				
+                        swingContainer.createOutputFrame();
 			while(result.next()) {
-				System.out.println(result.getString("C.name") + " and " + result.getString("D.name") + " have acted in " + result.getString("count") + " movies together.");
+                            String output = result.getString("C.name") + " and " + result.getString("D.name") + " have acted in " + result.getString("count") + " movies together.";
+                            swingContainer.addOutputToGui(output);
+                            System.out.println(output);
 			}
+                        
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -302,9 +318,13 @@ public class Driver {
 			PreparedStatement statement = con.prepareStatement("SELECT M.title, COUNT(A.aid) as count FROM movies M, acts_in A WHERE A.mid = M.mid GROUP BY M.mid ORDER BY count DESC LIMIT 1");
 			ResultSet result = statement.executeQuery();
 				
+                        swingContainer.createOutputFrame();
 			while(result.next()) {
-				System.out.println(result.getString("M.title") + " has the largest cast with " + result.getString("count") + " actors and actresses.");
+                            String output = result.getString("M.title") + " has the largest cast with " + result.getString("count") + " actors and actresses.";
+                            swingContainer.addOutputToGui(output);
+                            System.out.println(output);
 			}
+                        
 		}
 		catch (Exception e) {
 			e.printStackTrace();

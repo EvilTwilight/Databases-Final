@@ -12,12 +12,15 @@ public class swingContainer {
    JFrame outputFrame;
    JTextField userInput;
    JLabel tellUserWhatKeyword;
-  
+   
    JRadioButton option1;
    JRadioButton option2;
    JRadioButton option3;
    JRadioButton option4;
    JRadioButton option5;
+   
+   JScrollPane jScrollPane;
+   JPanel outputPanel;
    
    public swingContainer(){
       prepareGUI();
@@ -124,12 +127,12 @@ public class swingContainer {
             //statusLabel.setText("A Frame shown to the user.");
         	
         	if(option1.isSelected()) {
-        		try {
-					Driver.firstGet(userInput.getText());
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                    try {
+                            Driver.firstGet(userInput.getText());
+                    } catch (Exception e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                    }
         	}
 		 
 		if(option2.isSelected()) {
@@ -194,6 +197,8 @@ public class swingContainer {
       mainPanel.add(headingPanel);
       mainPanel.add(controlPanel);
       
+      headerLabel.setText("Databases Final");   
+      
       mainFrame.add(mainPanel);
       mainFrame.setVisible(true);  
       
@@ -213,46 +218,80 @@ public class swingContainer {
     	    }
       	});
       option2.addActionListener(new ActionListener() {
-	  	    public void actionPerformed(ActionEvent event) {
-	  	    	tellUserWhatKeyword.setText("Type in a keyword.");
-	  	    	userInput.setText("");
-	  	    }
+            public void actionPerformed(ActionEvent event) {
+                tellUserWhatKeyword.setText("Type in a keyword.");
+                userInput.setText("");
+            }
     	});
       option3.addActionListener(new ActionListener() {
-	  	    public void actionPerformed(ActionEvent event) {
-	  	    	tellUserWhatKeyword.setText("");
-	  	    	userInput.setText("");
-	  	    }
+            public void actionPerformed(ActionEvent event) {
+                tellUserWhatKeyword.setText("");
+                userInput.setText("");
+            }
     	});
       option4.addActionListener(new ActionListener() {
-	  	    public void actionPerformed(ActionEvent event) {
-	  	    	tellUserWhatKeyword.setText("");
-	  	    	userInput.setText("");
-	  	    }
+            public void actionPerformed(ActionEvent event) {
+                tellUserWhatKeyword.setText("");
+                userInput.setText("");
+            }
       });
       option5.addActionListener(new ActionListener() {
-	  	    public void actionPerformed(ActionEvent event) {
-	  	    	tellUserWhatKeyword.setText("");
-	  	    	userInput.setText("");
-	  	    }
+            public void actionPerformed(ActionEvent event) {
+                tellUserWhatKeyword.setText("");
+                userInput.setText("");
+            }
       });
       
    }
-   void showJFrameDemo(){
-      headerLabel.setText("Databases Final");   
+   
+   int yCounter = 1;
+   void createOutputFrame(){
+         
+      yCounter = 1;
+      
       outputFrame = new JFrame();
       outputFrame.setBackground(new java.awt.Color(189, 223, 239));
       outputFrame.setSize(500, 500);
-      outputFrame.setLayout(new FlowLayout());    
-      msglabel.setText("Output is: ");
-      outputFrame.add(msglabel);
+      
+      //outputFrame.setLayout(new FlowLayout());    
       
       outputFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
         	 outputFrame.dispose();
          }        
-      });    
+      });
+      
+      outputPanel = new JPanel();
+      outputPanel.setLayout(new GridBagLayout());
+      outputPanel.setBackground(new java.awt.Color(189, 223, 239));
+           
+      jScrollPane = new JScrollPane(outputPanel);
+      jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      jScrollPane.setSize(500,500);
+      jScrollPane.setBackground(new java.awt.Color(189, 223, 239));
+      JScrollBar bar = jScrollPane.getVerticalScrollBar();
+      bar.setPreferredSize(new Dimension(30, 0));
+              
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.gridy = 0;
+      gbc.gridx = 0;
+      msglabel.setText("The output is: ");
 
-      mainFrame.setVisible(true);  
+      outputPanel.add(msglabel,gbc);
+      outputFrame.add(jScrollPane);
+   }
+   
+   public void addOutputToGui(String outputLine){
+      yCounter++;
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.gridy = yCounter;
+      gbc.gridx = 0;
+      JLabel newOutputLabel = new JLabel();
+      newOutputLabel.setText(outputLine);
+      outputPanel.add(newOutputLabel,gbc);
+       
+      //outputFrame.add(jScrollPane);
+      outputFrame.setVisible(true);  
    }
 }
