@@ -147,6 +147,14 @@ public class swingContainer {
 					e1.printStackTrace();
 				}
         	}
+		
+		if(option4.isSelected()) {
+	    		try {
+					Driver.fourthGet();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	    	}
 		 
         	if(option5.isSelected()) {
         		try {
