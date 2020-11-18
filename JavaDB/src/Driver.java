@@ -129,7 +129,7 @@ public class Driver {
 				int actor_id = Integer.parseInt(input_array_castnames[1].replace("\"", ""));
 
 				
-				System.out.println("Attempting to insert actor_id: " + actor_id + " movie_id: " + movie_id);
+				// System.out.println("Attempting to insert actor_id: " + actor_id + " movie_id: " + movie_id);
 			
 				sql_query.setInt(1, actor_id);
 				sql_query.setInt(2, movie_id);
