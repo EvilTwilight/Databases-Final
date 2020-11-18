@@ -14,8 +14,7 @@ public class Driver {
 		createMoviesTable();
 		createCastTable();
 		createActsInTable();
-		//firstGet(scan);
-		//dropTable();
+		
 		import_movie_table();
 		import_cast_table();
 		import_actsin_table();
@@ -217,18 +216,18 @@ public class Driver {
 	}
 	
 	//Query one, number 5 in proposal
-	public static void firstGet(String userInput) throws Exception { // (5) query to find movie from an actor that has the higher score
+	public static void firstGet(String userInput) throws Exception { // (5) query to find movie from an actor that has the highet score
 		try {
 			//Scanner scan
 			Connection con = getConnection();
 			//scan.nextLine();
 			String input = userInput;
-			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.title ORDER BY M.score DESC LIMIT 1");
+			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.mid ORDER BY M.score DESC LIMIT 1");
 			
 			ResultSet result = statement.executeQuery();
 			
 			while(result.next()) {
-				System.out.println(result.getString("M.title"));
+				System.out.println(input + "'s best movie is " + result.getString("M.title"));
 			}
 		}
 		catch (Exception e) {
@@ -240,7 +239,7 @@ public class Driver {
 	}
 	
 	//Query two, number 6 in proposal
-	public static void secondGet(String userInput) throws Exception { 
+	public static void secondGet(String userInput) throws Exception { // (6) query to find movies using a user inputted keyword
 		try {
 			Connection con = getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M WHERE title LIKE \"%" + userInput +"%\"");
@@ -259,14 +258,14 @@ public class Driver {
 	}
 	
 	//Query three, number 7 in proposal
-	public static void thirdGet() throws Exception { 
+	public static void thirdGet() throws Exception { // (7) query to find the top 10 most popular actors based on their average movie scores.
 		try {
 			Connection con = getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT C.name, AVG(M.score) as avg_score FROM movies M, cast C, acts_in A WHERE C.aid = A.aid AND A.mid = M.mid GROUP BY C.name ORDER BY avg_score DESC LIMIT 10");
 			ResultSet result = statement.executeQuery();
 				
 			while(result.next()) {
-				System.out.println(result.getString("C.name"));
+				System.out.println(result.getString("C.name") + " has an average movie score of " + result.getString("avg_score"));
 			}
 		}
 		catch (Exception e) {
@@ -277,15 +276,34 @@ public class Driver {
 		}
 	}
 	
-	//Query five, number 9 in proposal (finds the movie with the largest cast size)
-	public static void fifthGet() throws Exception { 
+	//Query four, number 8 in proposal
+	public static void fourthGet() throws Exception { // (8) query to find a pair of actors/actresses that have starred in the most amount of movies together
 		try {
 			Connection con = getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT M.title, COUNT(A.aid) as count FROM movies M, acts_in A WHERE A.mid = M.mid GROUP BY M.title ORDER BY count DESC LIMIT 1");
+			PreparedStatement statement = con.prepareStatement("SELECT C.name, D.name, COUNT(M.mid) as count FROM cast C, cast D, acts_in A, acts_in B, movies M WHERE C.aid!=D.aid AND C.aid=A.aid AND D.aid=B.aid AND A.mid=B.mid AND A.mid=M.mid GROUP BY C.name, D.name ORDER BY count DESC LIMIT 1");
 			ResultSet result = statement.executeQuery();
 				
 			while(result.next()) {
-				System.out.println(result.getString("M.title"));
+				System.out.println(result.getString("C.name") + " and " + result.getString("D.name") + " have acted in " + result.getString("count") + " movies together.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("Query 4 complete.");
+		}
+	}
+	
+	//Query five, number 9 in proposal (finds the movie with the largest cast size)
+	public static void fifthGet() throws Exception { // (9) query to find the movie with the largest cast size
+		try {
+			Connection con = getConnection();
+			PreparedStatement statement = con.prepareStatement("SELECT M.title, COUNT(A.aid) as count FROM movies M, acts_in A WHERE A.mid = M.mid GROUP BY M.mid ORDER BY count DESC LIMIT 1");
+			ResultSet result = statement.executeQuery();
+				
+			while(result.next()) {
+				System.out.println(result.getString("M.title") + " has the largest cast with " + result.getString("count") + " actors and actresses.");
 			}
 		}
 		catch (Exception e) {
