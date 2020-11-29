@@ -22,6 +22,8 @@ public class swingContainer {
    JScrollPane jScrollPane;
    JPanel outputPanel;
    
+   int fontSize = 25;
+   
    public swingContainer(){
       prepareGUI();
    }
@@ -69,7 +71,9 @@ public class swingContainer {
       controlPanel.add(tellUserWhatKeyword, constr);
       
       userInput = new JTextField(20);
+      userInput.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel userInputLabel = new JLabel("Input your keyword(s): ");
+      userInputLabel.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.weightx = 0;
       constr.gridx=0;constr.gridy=1;
@@ -81,7 +85,9 @@ public class swingContainer {
       
       //Query 1 is number 5 on the proposal
       option1 = new JRadioButton("Query 1");
+      option1.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel option1Label = new JLabel("Find a movie with the highest score using an actor's name.");
+      option1Label.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.gridx=0;constr.gridy=2;
       controlPanel.add(option1Label, constr);
@@ -89,7 +95,9 @@ public class swingContainer {
       controlPanel.add(option1, constr);
       
       option2 = new JRadioButton("Query 2");
+      option2.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel option2Label = new JLabel("Find a movie with a keyword in the title.");
+      option2Label.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.gridx=0;constr.gridy=3;
       controlPanel.add(option2Label, constr);
@@ -97,7 +105,9 @@ public class swingContainer {
       controlPanel.add(option2, constr);
       
       option3 = new JRadioButton("Query 3");
+      option3.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel option3Label = new JLabel("Ten most popular actors.");
+      option3Label.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.gridx=0;constr.gridy=4;
       controlPanel.add(option3Label, constr);
@@ -105,7 +115,9 @@ public class swingContainer {
       controlPanel.add(option3, constr);
       
       option4 = new JRadioButton("Query 4");
+      option4.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel option4Label = new JLabel("Get group of actors that have performed in the most movies.");
+      option4Label.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.gridx=0;constr.gridy=5;
       controlPanel.add(option4Label, constr);
@@ -114,7 +126,9 @@ public class swingContainer {
       
       //our query
       option5 = new JRadioButton("Query 5");
+      option5.setFont(new Font("Arial", Font.PLAIN, fontSize));
       JLabel option5Label = new JLabel("Our Query: ");
+      option5Label.setFont(new Font("Arial", Font.PLAIN, fontSize));
       
       constr.gridx=0;constr.gridy=6;
       controlPanel.add(option5Label, constr);
@@ -122,6 +136,7 @@ public class swingContainer {
       controlPanel.add(option5, constr);
       
       JButton okButton = new JButton("Query the database");
+      okButton.setFont(new Font("Arial", Font.PLAIN, fontSize));
       okButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
             //statusLabel.setText("A Frame shown to the user.");
@@ -198,7 +213,7 @@ public class swingContainer {
       mainPanel.add(controlPanel);
       
       headerLabel.setText("Databases Final");   
-      
+      headerLabel.setFont(new Font("Arial", Font.PLAIN, 30));
       mainFrame.add(mainPanel);
       mainFrame.setVisible(true);  
       
@@ -251,7 +266,7 @@ public class swingContainer {
       
       outputFrame = new JFrame();
       outputFrame.setBackground(new java.awt.Color(189, 223, 239));
-      outputFrame.setSize(500, 500);
+      outputFrame.setSize(700, 700);
       
       //outputFrame.setLayout(new FlowLayout());    
       
@@ -268,7 +283,7 @@ public class swingContainer {
       jScrollPane = new JScrollPane(outputPanel);
       jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      jScrollPane.setSize(500,500);
+      jScrollPane.setSize(700,700);
       jScrollPane.setBackground(new java.awt.Color(189, 223, 239));
       JScrollBar bar = jScrollPane.getVerticalScrollBar();
       bar.setPreferredSize(new Dimension(30, 0));
@@ -277,7 +292,8 @@ public class swingContainer {
       gbc.gridy = 0;
       gbc.gridx = 0;
       msglabel.setText("The output is: ");
-
+      msglabel.setFont(new Font("Arial", Font.PLAIN, fontSize));
+      
       outputPanel.add(msglabel,gbc);
       outputFrame.add(jScrollPane);
    }
@@ -289,6 +305,7 @@ public class swingContainer {
       gbc.gridx = 0;
       JLabel newOutputLabel = new JLabel();
       newOutputLabel.setText(outputLine);
+      newOutputLabel.setFont(new Font("Arial", Font.PLAIN, fontSize));
       outputPanel.add(newOutputLabel,gbc);
        
       //outputFrame.add(jScrollPane);

@@ -224,11 +224,12 @@ public class Driver {
 			Connection con = getConnection();
 			//scan.nextLine();
 			String input = userInput;
-			PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.mid ORDER BY M.score DESC LIMIT 1");
-			
+            
+            PreparedStatement statement = con.prepareStatement("SELECT M.title FROM movies M, cast C, acts_in A WHERE C.name = \"" + input + "\" AND C.aid = A.aid AND M.mid = A.mid GROUP BY M.mid ORDER BY M.score DESC LIMIT 1");
+            
 			ResultSet result = statement.executeQuery();
 			
-                        swingContainer.createOutputFrame();
+            swingContainer.createOutputFrame();
 			while(result.next()) {
                             String output = input + "'s best movie is " + result.getString("M.title");
                             swingContainer.addOutputToGui(output);
