@@ -14,14 +14,17 @@ public class Driver {
         static swingContainer swingContainer;
 	public static void main(String[] args) throws Exception {
 		
-		createMoviesTable();
-		createCastTable();
-		createActsInTable();
-		
-		import_movie_table();
-		import_cast_table();
-		import_actsin_table();
-		
+        try{     
+            createMoviesTable();
+            createCastTable();
+            createActsInTable();
+
+            import_movie_table();
+            import_cast_table();
+            import_actsin_table();
+		}catch(Exception e){
+            System.out.println(e);
+        }
 		//Douglas
 		swingContainer = new swingContainer();  
 		
@@ -39,7 +42,8 @@ public class Driver {
 	}
 	
 	public static void import_movie_table() throws Exception{
-		String sql_movies_insert = "INSERT INTO movies (mid, title, score) VALUES (?, ?, ?)";
+		String sql_movies_insert = "INSERT IGNORE INTO movies (mid, title, score) VALUES (?, ?, ?)";
+        
 		String raw_lines = null;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(movie_name_score_path));
@@ -75,7 +79,7 @@ public class Driver {
 	}
 
 	public static void import_cast_table() throws Exception{
-		String sql_cast_insert = "REPLACE INTO cast (aid, name) VALUES (?, ?)";
+		String sql_cast_insert = "INSERT IGNORE INTO cast (aid, name) VALUES (?, ?)";
 		String raw_lines = null;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(movie_cast_path));
@@ -114,7 +118,7 @@ public class Driver {
 	}	
 	
 	public static void import_actsin_table() throws Exception{
-		String sql_cast_insert = "INSERT INTO acts_in (aid, mid) VALUES (?, ?);";
+		String sql_cast_insert = "INSERT IGNORE INTO acts_in (aid, mid) VALUES (?, ?);";
 		try {
 			BufferedReader reader_castnames = new BufferedReader(new FileReader(movie_cast_path));
 			Connection con = getConnection();
