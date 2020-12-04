@@ -30,6 +30,18 @@ public class Driver {
 		
 	}
 	
+	public static Connection getConnection() throws Exception{
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234"); //replace db name, username, and password accordingly
+			return conn;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static String clean_middle_commas(String input_string) {
 		String reg_exp_pattern = "(?<=\")([^\"]+?),([^\"]+?)(?=\")";
 		String original_string = input_string;
@@ -206,19 +218,6 @@ public class Driver {
 		finally {
 			System.out.println("Function complete.");
 		}
-	}
-	
-	public static Connection getConnection() throws Exception{
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			//"jdbc:mysql://localhost:3306/test", "root", "1234"
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "1234"); //replace db name, username, and password accordingly
-			return conn;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	//Query one, number 5 in proposal
